@@ -1,10 +1,13 @@
 const express = require('express')
 const PORT = process.env.PORT || 5000
 const app = express()
+const path = require('path')
 
-app.get('/', (req, res) => {
-    res.send('Hello World!')
-})
+
+app.use('/', express.static(path.join(__dirname, 'webpage/build')))
+// app.get('/', (req, res) => {
+//     res.send('Hello World!')
+// })
 
 
 app.get('/profile', (req, res) => {
@@ -18,6 +21,9 @@ app.put('/profile', (req, res) => {
 })
 app.delete('/profile', (req, res) => {
     res.send('profile deleted')
+})
+app.get("/**", (req, res, next) => {
+    res.sendFile(path.join(__dirname, "./webpage/build/index.html"))
 })
 
 
